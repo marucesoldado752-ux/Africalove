@@ -1,74 +1,80 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AFRIKA-LOVE</title>
-<style>
-body{margin:0;background:#0f0f0f;color:#fff;font-family:Arial;padding:0}
-header{background:#1a1a1a;padding:12px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:900;font-size:20px} .logo span{color:#ff7a00}
-#app{max-width:500px;margin:0 auto;padding:16px}
-h2{font-size:24px;margin:16px 0 8px} p{color:#aaa;margin-bottom:16px}
-input,select,textarea{width:100%;background:#222;border:1px solid #444;padding:14px;border-radius:12px;color:#fff;margin-bottom:12px;font-size:16px;display:block}
-button{width:100%;background:#25D366;color:#fff;border:none;padding:16px;border-radius:12px;font-size:18px;font-weight:800;cursor:pointer}
-.card{background:#1e1e1e;border-radius:16px;overflow:hidden;border:1px solid #333;margin-bottom:16px}
-.card img{width:100%;height:350px;object-fit:cover}
-.card-body{padding:14px}
-.btn-wa{background:#25D366;display:block;text-align:center;text-decoration:none;padding:14px;border-radius:12px;color:#fff;font-weight:800;margin-top:10px}
-</style>
-</head>
-<body>
-<header><div class="logo">🌍 AFRIKA-<span>LOVE</span></div><div>Conakry</div></header>
-<div id="app">
-<div id="reg">
-<h2>Trouve l'amour à Conakry ❤️</h2>
-<p>Crée ton profil - On te parle sur WhatsApp en vrai</p>
-<input id="n" placeholder="Ton prénom (ex: Maruce)">
-<input id="a" type="number" placeholder="Ton âge">
-<select id="c"><option>Conakry, Guinée</option><option>Dakar</option><option>Abidjan</option></select>
-<input id="w" placeholder="WhatsApp (ex: 663401157)" value="663401157">
-<input id="p" placeholder="Lien photo ou laisse vide">
-<textarea id="b" placeholder="Parle de toi..."></textarea>
-<button onclick="go()">💚 Créer mon profil</button>
-</div>
-<div id="list" style="display:none">
-<h3 id="hi" style="margin:10px 0"></h3>
-<div id="profiles"></div>
-<p style="text-align:center;color:#888;margin-top:20px;font-size:12px">Lien à partager:<br><b style="color:#fff">marucesoldado752-ux.github.io/Africalove</b></p>
-<button onclick="localStorage.clear();location.reload()" style="background:#222;margin-top:20px">Déconnexion</button>
-</div>
-</div>
-<script>
-let me=JSON.parse(localStorage.getItem('me')||'null');
-if(me){showList()}
-function go(){
- let name=document.getElementById('n').value;
- let age=document.getElementById('a').value;
- let city=document.getElementById('c').value;
- let wa=document.getElementById('w').value.replace(/[^0-9]/g,'');
- let photo=document.getElementById('p').value||'https://i.pravatar.cc/500?u='+Date.now();
- let bio=document.getElementById('b').value||'Dispo sur WhatsApp';
- if(!name||!age||!wa){alert('Remplis prénom, âge, WhatsApp');return}
- if(!wa.startsWith('224'))wa='224'+wa;
- me={id:Date.now(),name,age,city,wa,photo,bio};
- localStorage.setItem('me',JSON.stringify(me));
- let all=JSON.parse(localStorage.getItem('all')||'[]');all.push(me);localStorage.setItem('all',JSON.stringify(all));
- showList();
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AFRIKA-LOVE 20K</title><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#000;color:#fff;font-family:Arial}header{background:#111;padding:10px 14px;position:sticky;top:0;z-index:10;border-bottom:1px solid #222} .logo{font-weight:900;font-size:19px} .logo span{color:#ff7a00} .top{max-width:500px;margin:0 auto} .filters{display:flex;gap:8px;margin:10px 0} .filters button{flex:1;padding:10px;border-radius:20px;border:1px solid #333;background:#1a1a1a;color:#fff;font-weight:700} .filters button.active{background:#ff7a00;border-color:#ff7a00} #app{max-width:500px;margin:0 auto;min-height:100vh} .screen{padding:12px} input,select{width:100%;background:#1a1a1a;border:1px solid #333;padding:12px;border-radius:12px;color:#fff;margin-bottom:8px} .btn{width:100%;background:#ff7a00;border:none;padding:14px;border-radius:12px;color:#fff;font-weight:800} .card{background:#151515;border-radius:16px;overflow:hidden;border:1px solid #222;margin-bottom:12px;display:flex} .card img{width:110px;height:110px;object-fit:cover} .card-body{flex:1;padding:10px} .badge{font-size:10px;padding:2px 6px;border-radius:10px;font-weight:800} .b-girl{background:#ff2a6d} .b-boy{background:#0080ff} .row{display:flex;gap:6px;margin-top:6px} .icon{width:32px;height:32px;border-radius:50%;border:none;background:#222;color:#fff} .count{font-size:12px;color:#aaa;text-align:center;margin:8px 0}#chat{position:fixed;top:0;left:0;right:0;bottom:0;background:#000;z-index:100;display:none;flex-direction:column}#chat.active{display:flex} .chat-head{background:#111;padding:10px;display:flex;gap:10px;align-items:center} .msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#0a0a0a} .msg{max-width:78%;padding:8px 12px;border-radius:16px;font-size:14px} .msg.me{background:#ff7a00;align-self:flex-end} .msg.other{background:#222;align-self:flex-start} .input-bar{background:#111;padding:8px;display:flex;gap:6px} .input-bar input{margin:0;flex:1}</style></head><body><header><div class="top"><div style="display:flex;justify-content:space-between;align-items:center"><div class="logo">🌍 AFRIKA-<span>LOVE</span> 20K</div><div style="font-size:11px;color:#25D366">● 20.000 membres</div></div><div class="filters"><button id="fAll" class="active" onclick="setFilter('all')">Tous 20K</button><button id="fGirls" onclick="setFilter('girl')">💃 Filles 10K</button><button id="fBoys" onclick="setFilter('boy')">🕺 Garçons 10K</button></div><input id="search" placeholder="🔍 Recherche nom, ville..." oninput="doSearch()"></div></header><div id="app"><div id="reg" class="screen"><h2 style="margin:10px 0">Rejoins 20.000 célibataires ❤️</h2><p style="color:#888;font-size:13px;margin-bottom:10px">10K filles + 10K garçons de Conakry, Dakar, Abidjan</p><input id="n" placeholder="Ton prénom"><input id="a" type="number" placeholder="Âge"><select id="g"><option value="girl">Je suis une fille</option><option value="boy">Je suis un garçon</option></select><select id="c"><option>Conakry, Guinée</option><option>Dakar, Sénégal</option><option>Abidjan</option><option>Bamako</option></select><input id="w" placeholder="WhatsApp 663401157" value="663401157"><input id="p" placeholder="Lien photo ou vide"><button class="btn" onclick="go()">🔥 Entrer dans les 20K</button></div><div id="list" class="screen" style="display:none"><div id="count" class="count"></div><div id="profiles"></div><button id="loadMore" class="btn" style="background:#222;margin:12px 0" onclick="loadMore()">Charger +20 profils ⬇️</button></div></div><div id="chat"><div class="chat-head"><button onclick="closeChat()" style="background:none;border:none;color:#fff;font-size:22px">←</button><img id="cAv" style="width:36px;height:36px;border-radius:50%"><div><div id="cName" style="font-weight:800"></div><div style="font-size:11px;color:#25D366">En ligne</div></div><div style="flex:1"></div><button onclick="call()" style="background:none;border:none;font-size:22px">📞</button><button onclick="call(true)" style="background:none;border:none;font-size:22px">🎥</button></div><div class="msgs" id="msgs"></div><div class="input-bar"><input type="file" id="file" accept="image/*,video/*" style="display:none" onchange="sendFile(this)"><button class="icon" onclick="document.getElementById('file').click()">📎</button><button class="icon" id="rec" onmousedown="startRec()" onmouseup="stopRec()" ontouchstart="startRec()" ontouchend="stopRec()">🎤</button><input id="mIn" placeholder="Message..." onkeypress="if(event.key==='Enter')send()"><button class="icon" style="background:#ff7a00" onclick="send()">➤</button></div></div><script>
+const girlNames=["Aminata","Mariam","Fatoumata","Aissatou","Kadiatou","Mama","Adama","Hawa","Bintou","Salimatou","Nene","Fanta","Djenabou","Mabinty","Aicha","Saran","Kadi","Oumou","Rougui","Safia","Lala","Awa","Mado","Fifi","Bebe","Linda","Grace","Esther","Sarah","Ruth","Fatou","Aminatou","Zenab","Mariama","Kadiata","Mbalia","Fatouma","Sira","Kadiatou","Yarie","Nabou","Fana","Mamy","Mamie","Binta","Haby","Kouta","Mimi","Lili"];
+const boyNames=["Mamadou","Ibrahima","Moussa","Alpha","Ousmane","Abdoulaye","Sekou","Amadou","Mohamed","Aliou","Ismael","Ibrahim","Souleymane","Youssouf","Daouda","Abou","Lamine","Cheick","Fode","Mory","Naby","Bangaly","Facely","Aboubacar","Elhadj","Saidou","Sory","Mamadi","Mamady","Kaba","Keita","Camara","Conde","Diallo","Bah","Barry","Sylla","Traore","Soumah","Toure","Cisse","Kante","Diakite","Sow","Fofana","Millimono","Lamah","Sangare","Kouyate"];
+const cities=["Conakry, Guinée","Conakry, Guinée","Conakry, Guinée","Dakar, Sénégal","Abidjan, Côte d'Ivoire","Bamako, Mali","Conakry, Kaloum","Conakry, Ratoma","Conakry, Matam","Conakry, Dixinn"];
+let me=JSON.parse(localStorage.getItem('v6_me')||'null');
+let allUsers=[]; let filtered=[]; let page=0; const PAGE_SIZE=20; let curFilter='all'; let searchQ='';
+let chats=JSON.parse(localStorage.getItem('v6_chats')||'{}'); let curChat=null, mediaRec=null, recChunks=[];
+
+function genUsers(){
+ allUsers=[];
+ for(let i=0;i<10000;i++){
+  let name=girlNames[Math.floor(Math.random()*girlNames.length)] + (i>50? ' '+ (i%100):'');
+  let age=18+Math.floor(Math.random()*17);
+  let city=cities[Math.floor(Math.random()*cities.length)];
+  let id='g_'+i;
+  let photo=`https://randomuser.me/api/portraits/women/${i%70}.jpg`;
+  if(i%23==0) photo=`https://images.unsplash.com/photo-${1531123897727 + i%1000}?w=200`;
+  allUsers.push({id,name,age,city,gender:'girl',wa:'2246'+(20000000+Math.floor(Math.random()*80000000)),photo,bio:'Salut c\'est '+name+' de '+city.split(',')[0]+' ❤️ Dispo sur WhatsApp',online:Math.random()>0.4});
+ }
+ for(let i=0;i<10000;i++){
+  let name=boyNames[Math.floor(Math.random()*boyNames.length)] + (i>50? ' '+ (i%100):'');
+  let age=20+Math.floor(Math.random()*18);
+  let city=cities[Math.floor(Math.random()*cities.length)];
+  let id='b_'+i;
+  let photo=`https://randomuser.me/api/portraits/men/${i%70}.jpg`;
+  allUsers.push({id,name,age,city,gender:'boy',wa:'2246'+(20000000+Math.floor(Math.random()*80000000)),photo,bio:'Yo c\'est '+name+' de '+city.split(',')[0]+' 💪 Cherche rencontre sérieuse',online:Math.random()>0.4});
+ }
+ // Shuffle
+ for(let i=allUsers.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[allUsers[i],allUsers[j]]=[allUsers[j],allUsers[i]];}
 }
-function showList(){
- document.getElementById('reg').style.display='none';
- document.getElementById('list').style.display='block';
- document.getElementById('hi').innerText='Salut '+me.name+' 👋 - Découvre';
- let all=JSON.parse(localStorage.getItem('all')||'[]');
- let demo=[{name:'Aminata',age:24,city:'Conakry',wa:'224663401157',photo:'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=500',bio:'Coucou, écris-moi sur WhatsApp ❤️'}];
- let list=document.getElementById('profiles');list.innerHTML='';
- [...demo,...all.filter(x=>x.id!=me.id)].forEach(u=>{
-  if(u.id==me.id)return;
-  let link='https://wa.me/'+u.wa+'?text='+encodeURIComponent('Salut '+u.name+' ! Vu sur AFRIKA-LOVE ❤️ C\'est '+me.name+' de '+me.city);
-  list.innerHTML+=`<div class="card"><img src="${u.photo}"><div class="card-body"><b>${u.name}, ${u.age}</b> - ${u.city}<br><small style="color:#aaa">${u.bio}</small><a class="btn-wa" href="${link}" target="_blank">💚 Parler sur WhatsApp</a></div></div>`;
+genUsers();
+
+function setFilter(f){curFilter=f;document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));document.getElementById(f==='all'?'fAll':f==='girl'?'fGirls':'fBoys').classList.add('active');apply();}
+
+function doSearch(){searchQ=document.getElementById('search').value.toLowerCase();apply();}
+
+function apply(){
+ filtered=allUsers.filter(u=>{
+  if(curFilter!=='all' && u.gender!==curFilter) return false;
+  if(searchQ && ! (u.name.toLowerCase().includes(searchQ) || u.city.toLowerCase().includes(searchQ))) return false;
+  return true;
  });
+ page=0; document.getElementById('profiles').innerHTML=''; loadMore();
+ document.getElementById('count').innerText=filtered.length.toLocaleString()+' profils trouvés • '+ (curFilter==='girl'?'10.000 filles':curFilter==='boy'?'10.000 garçons':'20.000 membres');
 }
-</script>
-</body>
-</html>
+
+if(me){document.getElementById('reg').style.display='none';document.getElementById('list').style.display='block';apply();}
+
+function go(){
+ let n=document.getElementById('n').value.trim(), a=document.getElementById('a').value.trim(), g=document.getElementById('g').value, c=document.getElementById('c').value, wa=document.getElementById('w').value.replace(/[^0-9]/g,''), ph=document.getElementById('p').value.trim()||`https://i.pravatar.cc/200?u=${Date.now()}`;
+ if(!n||!a||!wa){alert('Remplis');return} if(!wa.startsWith('224')) wa='224'+wa;
+ me={id:'me',name:n,age:a,city:c,gender:g,wa,photo:ph,bio:'Nouveau membre ❤️',online:true};
+ localStorage.setItem('v6_me',JSON.stringify(me));
+ document.getElementById('reg').style.display='none';document.getElementById('list').style.display='block';apply();
+}
+
+function loadMore(){
+ let end=Math.min(page*PAGE_SIZE+PAGE_SIZE, filtered.length);
+ for(let i=page*PAGE_SIZE;i<end;i++){
+  let u=filtered[i]; if(!u) continue;
+  let div=document.createElement('div'); div.className='card';
+  let badge=u.gender==='girl'?'<span class="badge b-girl">FILLE</span>':'<span class="badge b-boy">GARÇON</span>';
+  let online=u.online?'<span style="color:#25D366">● En ligne</span>':'<span style="color:#888">○ Hors ligne</span>';
+  div.innerHTML=`<img src="${u.photo}" onerror="this.src='https://i.pravatar.cc/200?u=${u.id}'"><div class="card-body"><div style="display:flex;justify-content:space-between"><b>${u.name}, ${u.age}</b>${badge}</div><div style="font-size:12px;color:#aaa">${u.city} • ${online}</div><div style="font-size:12px;color:#ddd;margin:4px 0">${u.bio}</div><div class="row"><button class="icon" onclick="like('${u.id}')">❤️</button><button class="icon" onclick="openChat('${u.id}','${u.name}','${u.photo}','${u.wa}')">💬</button><a href="https://wa.me/${u.wa}?text=Salut ${u.name} vu sur AFRIKA-LOVE 20K" target="_blank"><button class="icon" style="background:#25D366">💚</button></a><button class="icon" onclick="call(false,'${u.wa}')">📞</button><button class="icon" onclick="call(true,'${u.wa}')">🎥</button></div></div>`;
+  document.getElementById('profiles').appendChild(div);
+ }
+ page++; document.getElementById('loadMore').style.display= page*PAGE_SIZE>=filtered.length?'none':'block';
+}
+
+function like(id){alert('❤️ Liké ! Retrouve dans Tes Likes (bientôt)');}
+function getId(o){return [me.id,o].sort().join('_');}
+function openChat(id,name,photo,wa){curChat={id,name,photo,wa};document.getElementById('cName').innerText=name;document.getElementById('cAv').src=photo;document.getElementById('chat').classList.add('active');loadMsgs();}
+function closeChat(){document.getElementById('chat').classList.remove('active');}
+function loadMsgs(){if(!curChat)return;let cid=getId(curChat.id);let list=chats[cid]||[];let box=document.getElementById('msgs');box.innerHTML='';list.forEach(m=>{let d=document.createElement('div');d.className='msg '+(m.me?'me':'other');d.innerHTML=(m.text?m.text:'')+(m.img?`<br><img src="${m.img}" style="max-width:180px;border-radius:10px">`:'')+(m.audio?`<br><audio controls src="${m.audio}" style="width:160px"></audio>`:'');box.appendChild(d);});box.scrollTop=box.scrollHeight;}
+function send(){let i=document.getElementById('mIn');let t=i.value.trim();if(!t||!curChat)return;let cid=getId(curChat.id);chats[cid]=chats[cid]||[];chats[cid].push({me:true,text:t,time:Date.now()});i.value='';localStorage.setItem('v6_chats',JSON.stringify(chats));loadMsgs();setTimeout(()=>{chats[cid].push({me:false,text:'Coucou ❤️ Merci pour ton message !',time:Date.now()});localStorage.setItem('v6_chats',JSON.stringify(chats));loadMsgs();},1000);}
+function sendFile(inp){let f=inp.files[0];if(!f||!curChat)return;let r=new FileReader();r.onload=e=>{let cid=getId(curChat.id);chats[cid]=chats[cid]||[];chats[cid].push({me:true,img:e.target.result,time:Date.now()});localStorage.setItem('v6_chats',JSON.stringify(chats));loadMsgs();};r.readAsDataURL(f);}
+function startRec(){if(!navigator.mediaDevices)return; navigator.mediaDevices.getUserMedia({audio:true}).then(s=>{mediaRec=new MediaRecorder(s);recChunks=[];mediaRec.ondataavailable=e=>recChunks.push(e.data);mediaRec.onstop=()=>{let b=new Blob(recChunks,{type:'audio/webm'});let r=new FileReader();r.onload=e=>{let cid=getId(curChat.id);chats[cid]=chats[cid]||[];chats[cid].push({me:true,audio:e.target.result,time:Date.now()});localStorage.setItem('v6_chats',JSON.stringify(chats));loadMsgs();};r.readAsDataURL(b);};mediaRec.start();document.getElementById('rec').innerText='🔴';});}
+function stopRec(){if(mediaRec&&mediaRec.state==='recording'){mediaRec.stop();document.getElementById('rec').innerText='🎤';}}
+function call(video,wa){let num=wa||curChat?.wa||'224663401157';if(video) window.open('https://meet.jit.si/AFRIKA-LOVE-'+num,'_blank'); else window.open('https://wa.me/'+num,'_blank');}
+</script></body></html>
