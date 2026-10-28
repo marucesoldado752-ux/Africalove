@@ -1,1 +1,74 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AFRIKA-LOVE</title><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0f0f0f;color:#fff;font-family:Arial;min-height:100vh}header{background:#1a1a1a;padding:12px 16px;display:flex;justify-content:space-between;position:sticky;top:0;border-bottom:1px solid #333}.logo{font-weight:900;font-size:20px}.logo span{color:#ff7a00}.badge{font-size:9px;background:#25D366;padding:2px 6px;border-radius:10px}#app{max-width:500px;margin:0 auto}.screen{display:none;padding:16px}.screen.active{display:block}.card{background:#1e1e1e;border-radius:16px;overflow:hidden;border:1px solid #2a2a2a;margin-bottom:16px;position:relative}.card-img{width:100%;height:360px;object-fit:cover}.card-body{padding:14px}.card-name{font-size:20px;font-weight:800}.card-loc{color:#aaa;font-size:14px;margin:4px 0 8px}.card-bio{font-size:14px;color:#ddd;margin-bottom:12px}.btn-wa{width:100%;background:#25D366;color:#fff;border:none;padding:14px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;display:flex;justify-content:center;gap:8px}input,textarea,select{width:100%;background:#2a2a2a;border:1px solid #3a3a3a;padding:14px;border-radius:12px;color:#fff;margin-bottom:12px;font-size:16px}</style></head><body><header><div class="logo">🌍 AFRIKA-<span>LOVE</span> <span class="badge">WHATSAPP</span></div><div style="font-size:12px;color:#aaa">Conakry</div></header><div id="app"><div id="screenRegister" class="screen active"><h2 style="margin:20px 0 8px;font-size:26px">Trouve l'amour à Conak
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AFRIKA-LOVE</title>
+<style>
+body{margin:0;background:#0f0f0f;color:#fff;font-family:Arial;padding:0}
+header{background:#1a1a1a;padding:12px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:900;font-size:20px} .logo span{color:#ff7a00}
+#app{max-width:500px;margin:0 auto;padding:16px}
+h2{font-size:24px;margin:16px 0 8px} p{color:#aaa;margin-bottom:16px}
+input,select,textarea{width:100%;background:#222;border:1px solid #444;padding:14px;border-radius:12px;color:#fff;margin-bottom:12px;font-size:16px;display:block}
+button{width:100%;background:#25D366;color:#fff;border:none;padding:16px;border-radius:12px;font-size:18px;font-weight:800;cursor:pointer}
+.card{background:#1e1e1e;border-radius:16px;overflow:hidden;border:1px solid #333;margin-bottom:16px}
+.card img{width:100%;height:350px;object-fit:cover}
+.card-body{padding:14px}
+.btn-wa{background:#25D366;display:block;text-align:center;text-decoration:none;padding:14px;border-radius:12px;color:#fff;font-weight:800;margin-top:10px}
+</style>
+</head>
+<body>
+<header><div class="logo">🌍 AFRIKA-<span>LOVE</span></div><div>Conakry</div></header>
+<div id="app">
+<div id="reg">
+<h2>Trouve l'amour à Conakry ❤️</h2>
+<p>Crée ton profil - On te parle sur WhatsApp en vrai</p>
+<input id="n" placeholder="Ton prénom (ex: Maruce)">
+<input id="a" type="number" placeholder="Ton âge">
+<select id="c"><option>Conakry, Guinée</option><option>Dakar</option><option>Abidjan</option></select>
+<input id="w" placeholder="WhatsApp (ex: 663401157)" value="663401157">
+<input id="p" placeholder="Lien photo ou laisse vide">
+<textarea id="b" placeholder="Parle de toi..."></textarea>
+<button onclick="go()">💚 Créer mon profil</button>
+</div>
+<div id="list" style="display:none">
+<h3 id="hi" style="margin:10px 0"></h3>
+<div id="profiles"></div>
+<p style="text-align:center;color:#888;margin-top:20px;font-size:12px">Lien à partager:<br><b style="color:#fff">marucesoldado752-ux.github.io/Africalove</b></p>
+<button onclick="localStorage.clear();location.reload()" style="background:#222;margin-top:20px">Déconnexion</button>
+</div>
+</div>
+<script>
+let me=JSON.parse(localStorage.getItem('me')||'null');
+if(me){showList()}
+function go(){
+ let name=document.getElementById('n').value;
+ let age=document.getElementById('a').value;
+ let city=document.getElementById('c').value;
+ let wa=document.getElementById('w').value.replace(/[^0-9]/g,'');
+ let photo=document.getElementById('p').value||'https://i.pravatar.cc/500?u='+Date.now();
+ let bio=document.getElementById('b').value||'Dispo sur WhatsApp';
+ if(!name||!age||!wa){alert('Remplis prénom, âge, WhatsApp');return}
+ if(!wa.startsWith('224'))wa='224'+wa;
+ me={id:Date.now(),name,age,city,wa,photo,bio};
+ localStorage.setItem('me',JSON.stringify(me));
+ let all=JSON.parse(localStorage.getItem('all')||'[]');all.push(me);localStorage.setItem('all',JSON.stringify(all));
+ showList();
+}
+function showList(){
+ document.getElementById('reg').style.display='none';
+ document.getElementById('list').style.display='block';
+ document.getElementById('hi').innerText='Salut '+me.name+' 👋 - Découvre';
+ let all=JSON.parse(localStorage.getItem('all')||'[]');
+ let demo=[{name:'Aminata',age:24,city:'Conakry',wa:'224663401157',photo:'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=500',bio:'Coucou, écris-moi sur WhatsApp ❤️'}];
+ let list=document.getElementById('profiles');list.innerHTML='';
+ [...demo,...all.filter(x=>x.id!=me.id)].forEach(u=>{
+  if(u.id==me.id)return;
+  let link='https://wa.me/'+u.wa+'?text='+encodeURIComponent('Salut '+u.name+' ! Vu sur AFRIKA-LOVE ❤️ C\'est '+me.name+' de '+me.city);
+  list.innerHTML+=`<div class="card"><img src="${u.photo}"><div class="card-body"><b>${u.name}, ${u.age}</b> - ${u.city}<br><small style="color:#aaa">${u.bio}</small><a class="btn-wa" href="${link}" target="_blank">💚 Parler sur WhatsApp</a></div></div>`;
+ });
+}
+</script>
+</body>
+</html>
